@@ -1,0 +1,11 @@
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\bin\Debug\netcoreapp2.0\MtgPortfolio.Api.deps.json
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\bin\Debug\netcoreapp2.0\MtgPortfolio.Api.runtimeconfig.json
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\bin\Debug\netcoreapp2.0\MtgPortfolio.Api.runtimeconfig.dev.json
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\bin\Debug\netcoreapp2.0\MtgPortfolio.Api.dll
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\bin\Debug\netcoreapp2.0\MtgPortfolio.Api.pdb
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\obj\Debug\netcoreapp2.0\MtgPortfolio.Api.csproj.CoreCompileInputs.cache
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\obj\Debug\netcoreapp2.0\MtgPortfolio.Api.AssemblyInfoInputs.cache
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\obj\Debug\netcoreapp2.0\MtgPortfolio.Api.AssemblyInfo.cs
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\obj\Debug\netcoreapp2.0\MtgPortfolio.Api.dll
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\obj\Debug\netcoreapp2.0\MtgPortfolio.Api.pdb
+C:\Projects\mtgportfolioapi2\MtgPortfolio.Api\obj\Debug\netcoreapp2.0\MtgPortfolio.Api.csprojResolveAssemblyReference.cache
