@@ -19,8 +19,10 @@ namespace MtgPortfolio.API.Services
     public class MtgJsonImportService : IMtgJsonImportService
     {
         private readonly ILogger<MtgJsonImportService> _logger;
-        private readonly IMtgPortfolioRepository _repo;
-        private readonly IMtgPortfolioCodesRepository _codesRepo;
+        private readonly IRepository _repo;
+        private readonly ICodesRepository _codesRepo;
+        private readonly IMapper _mapper;
+
         private List<LayoutEntity> _layoutEntities;
         private List<BorderEntity> _borderEntities;
         private List<ColorEntity> _colorEntities;
@@ -33,12 +35,14 @@ namespace MtgPortfolio.API.Services
         private List<SupertypeEntity> _supertypeEntities;
 
         public MtgJsonImportService(ILogger<MtgJsonImportService> logger,
-            IMtgPortfolioRepository repo,
-            IMtgPortfolioCodesRepository codesRepo)
+            IRepository repo,
+            ICodesRepository codesRepo,
+            IMapper mapper)
         {
             _logger = logger;
             _repo = repo;
             _codesRepo = codesRepo;
+            _mapper = mapper;
         }
 
         public bool ImportMtgJsonToDatabase()
@@ -55,12 +59,50 @@ namespace MtgPortfolio.API.Services
             ImportAndInsertFormats(mtgJsonAllCards);
             ImportAndInsertLegalities(mtgJsonAllCards);
             ImportAndInsertRarities(mtgJsonAllCards);
-            ImportAndInsertSets(mtgJsonAllCards);
             ImportAndInsertType(mtgJsonAllCards);
             ImportAndInsertSupertypes(mtgJsonAllCards);
             ImportAndInsertSubtypes(mtgJsonAllCards);
 
+            ImportAndInsertSets(mtgJsonAllSets);
+
             return true;
+        }
+
+        private void ImportAndInsertSets(List<MtgJsonSet> mtgJsonAllSets)
+        {
+            var distinctSets = mtgJsonAllSets.Distinct();
+
+            foreach (var set in distinctSets) { set.Cards = null; };
+
+            //get from DB
+            _setEntities = _codesRepo.GetSetEntities().ToList();
+
+            //Filter to exclude what is already in DB and map to entity
+            var entitiesToAdd = GetDistinctNewEntities(distinctSets, _setEntities);
+
+            if (entitiesToAdd != null && entitiesToAdd.Any())
+            {
+                //Insert new entities to DB
+                _codesRepo.InsertSetEntities(entitiesToAdd);
+
+                //Add new entities with Ids to variable
+                _setEntities.AddRange(entitiesToAdd);
+            }
+        }
+
+        private IEnumerable<SetEntity> GetDistinctNewEntities(IEnumerable<MtgJsonSet> mtgJsonSets, List<SetEntity> setEntities)
+        {
+            List<MtgJsonSet> setsToAdd = new List<MtgJsonSet>();
+
+            foreach (var set in mtgJsonSets)
+            {
+                if (setEntities == null || !setEntities.Any(s => s.Code == set.Code))
+                {
+                    setsToAdd.Add(set);
+                }
+            }
+
+            return _mapper.Map<IEnumerable<MtgJsonSet>, IEnumerable<SetEntity>>(setsToAdd);
         }
 
         private void ImportAndInsertSubtypes(List<MtgJsonCard> mtgJsonAllCards)
@@ -133,10 +175,6 @@ namespace MtgPortfolio.API.Services
                 //Add new entities with Ids to variable
                 _typeEntities.AddRange(entitiesToAdd);
             }
-        }
-
-        private void ImportAndInsertSets(List<MtgJsonCard> mtgJsonAllCards)
-        {
         }
 
         private void ImportAndInsertRarities(List<MtgJsonCard> mtgJsonAllCards)
@@ -291,7 +329,7 @@ namespace MtgPortfolio.API.Services
             {
                 if (!codesInDatabase.Any(c => c.Code == typeCode))
                 {
-                    results.Add(Mapper.Map<T>(typeCode));
+                    results.Add(_mapper.Map<T>(typeCode));
                 }
             }
 

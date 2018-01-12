@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MtgPortfolio.API.Repositories
 {
-    public class MtgPortfolioCodesRepository : IMtgPortfolioCodesRepository
+    public class CodesRepository : ICodesRepository
     {
         private readonly MtgPortfolioDbContext _context;
 
-        public MtgPortfolioCodesRepository(MtgPortfolioDbContext context)
+        public CodesRepository(MtgPortfolioDbContext context)
         {
             _context = context;
         }

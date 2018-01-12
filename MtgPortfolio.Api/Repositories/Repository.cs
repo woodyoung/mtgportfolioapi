@@ -6,11 +6,11 @@ using MtgPortfolio.API.Entities;
 
 namespace MtgPortfolio.API.Repositories
 {
-    public class MtgPortfolioRepository : IMtgPortfolioRepository
+    public class Repository : IRepository
     {
         private readonly MtgPortfolioDbContext _context;
 
-        public MtgPortfolioRepository(MtgPortfolioDbContext context)
+        public Repository(MtgPortfolioDbContext context)
         {
             _context = context;
         }

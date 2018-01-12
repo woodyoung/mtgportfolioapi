@@ -13,8 +13,7 @@ namespace MtgPortfolio.API.Entities.Codes
         public BorderEntity Border { get; set; }
         public int BorderId { get; set; }
         [MaxLength(160)]
-        public string Type { get; set; }
-        public string MkmName { get; set; }
-        public int MkmId { get; set; }
+        public string SetType { get; set; }
+        public DateTime ReleaseDate { get; set; }
     }
 }

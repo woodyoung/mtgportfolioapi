@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MtgPortfolio.API.Repositories
 {
-    public interface IMtgPortfolioCodesRepository
+    public interface ICodesRepository
     {
         #region Gets
         IEnumerable<LayoutEntity> GetLayoutEntities();

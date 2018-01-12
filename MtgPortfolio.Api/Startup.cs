@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MtgPortfolio.API.Automapper;
+using MtgPortfolio.Api.Services;
 using MtgPortfolio.API.Entities;
-using MtgPortfolio.API.Entities.Codes;
-using MtgPortfolio.API.Models;
 using MtgPortfolio.API.Repositories;
 using MtgPortfolio.API.Services;
 using Swashbuckle.AspNetCore.Swagger;
+using AutoMapper;
+using MtgPortfolio.Api.Automapper;
 
 namespace MtgPortfolio.Api
 {
@@ -25,16 +25,19 @@ namespace MtgPortfolio.Api
         {
             services.AddMvc();
 
+            services.AddAutoMapper();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
 
             services.AddTransient<IMtgCardService, MtgCardService>();
-            services.AddTransient<IMtgPortfolioRepository, MtgPortfolioRepository>();
-            services.AddTransient<IMtgPortfolioCodesRepository, MtgPortfolioCodesRepository>();
+            services.AddTransient<IRepository, Repository>();
+            services.AddTransient<ICodesRepository, CodesRepository>();
             services.AddTransient<IMtgJsonImportService, MtgJsonImportService>();
-            
+            services.AddTransient<ICodesService, CodesService>();
+
             var connectionString = @"Server=(localdb)\ProjectsV13;Database=MtgPortfolio;Trusted_Connection=True;";
             services.AddDbContext<MtgPortfolioDbContext>(o => o.UseSqlServer(connectionString));
         }
@@ -57,34 +60,7 @@ namespace MtgPortfolio.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mtg Portfolio V1");
             });
-
-            AutoMapper.Mapper.Initialize(config =>
-            {
-                config.CreateMap<MtgCardEntity, MtgCard>()
-                    .ReverseMap();
-
-                config.CreateMap<string, LayoutEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, BorderEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, ColorEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, FormatEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, LegalityEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, RarityEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, SetEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, SubtypeEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, SupertypeEntity>()
-                    .ApplyBaseMapping();
-                config.CreateMap<string, TypeEntity>()
-                    .ApplyBaseMapping();
-            });
-
+            
             app.UseMvc();
         }
     }

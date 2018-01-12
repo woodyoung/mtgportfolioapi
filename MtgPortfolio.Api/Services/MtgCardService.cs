@@ -12,13 +12,15 @@ namespace MtgPortfolio.API.Services
 {
     public class MtgCardService : IMtgCardService
     {
-        private ILogger<MtgCardService> _logger;
-        private IMtgPortfolioRepository _repository;
+        private readonly ILogger<MtgCardService> _logger;
+        private readonly IRepository _repository;
+        private readonly IMapper _mapper;
 
-        public MtgCardService(ILogger<MtgCardService> logger, IMtgPortfolioRepository repository)
+        public MtgCardService(ILogger<MtgCardService> logger, IRepository repository, IMapper mapper)
         {
             _logger = logger;
             _repository = repository;
+            _mapper = mapper;
         }
 
         public MtgCard GetMtgCard(string name)
@@ -44,7 +46,7 @@ namespace MtgPortfolio.API.Services
 
             foreach (var cardEntity in cardEntities)
             {
-                cards.Add(Mapper.Map<MtgCardEntity, MtgCard>(cardEntity));
+                cards.Add(_mapper.Map<MtgCardEntity, MtgCard>(cardEntity));
             }
 
             return cards;

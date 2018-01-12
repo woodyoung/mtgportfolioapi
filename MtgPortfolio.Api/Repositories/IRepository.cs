@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MtgPortfolio.API.Repositories
 {
-    public interface IMtgPortfolioRepository 
+    public interface IRepository 
     {
         IEnumerable<MtgCardEntity> GetMtgCards();
         MtgCardEntity GetMtgCardByName(string name);

@@ -10,7 +10,7 @@ namespace MtgPortfolio.API.Models.MtgJson
         public string GathererCode { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string Border { get; set; }
-        public string SetType { get; set; }
+        public string Type { get; set; }
         public string Block { get; set; }
         public bool? OnlineOnly { get; set; }
         public IEnumerable<string> BoosterSetup { get; set; }
