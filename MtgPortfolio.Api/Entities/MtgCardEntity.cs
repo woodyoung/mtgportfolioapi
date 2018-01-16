@@ -22,7 +22,7 @@ namespace MtgPortfolio.API.Entities
         public string Name { get; set; }
         [MaxLength(20)]
         public string ManaCost { get; set; }
-        public decimal ConvertedManaCost { get; set; }
+        public decimal? ConvertedManaCost { get; set; }
         [MaxLength(100)]
         public string Type { get; set; }
         public int RarityId { get; set; }
@@ -34,13 +34,16 @@ namespace MtgPortfolio.API.Entities
         public string Artist { get; set; }
         [MaxLength(10)]
         public string Number { get; set; }
-        public decimal Power { get; set; }
-        public decimal Toughness { get; set; }
-        public decimal Loyalty { get; set; }
+        public string Power { get; set; }
+        public string Toughness { get; set; }
+        public decimal? PowerDecimal { get; set; }
+        public decimal? ToughnessDecimal { get; set; }
+        public decimal? Loyalty { get; set; }
         public Int64 MultiverseId { get; set; }
+        public int BorderId { get; set; }
         public bool IsTimeShifted { get; set; }
         public bool IsReserved { get; set; }
-        public DateTime RelaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
         public bool IsStarter { get; set; }
 
         [MaxLength(1000)]
@@ -51,16 +54,19 @@ namespace MtgPortfolio.API.Entities
         public int SetId { get; set; }
 
 
+        [ForeignKey("BorderId")]
+        public virtual BorderEntity Border{ get; set; }
         [ForeignKey("LayoutId")]
         public virtual LayoutEntity Layout { get; set; }
         [ForeignKey("SetId")]
         public virtual SetEntity Set { get; set; }
         [ForeignKey("RarityId")]
         public virtual RarityEntity Rarity { get; set; }
-        public virtual ICollection<MtgCardLegalitiesEntity> Legalities { get; set; }
-        public virtual ICollection<MtgCardColorsEntity> ColorIdentity { get; set; }
-        public virtual ICollection<MtgCardSetsEntity> Printings { get; set; }
-        public virtual ICollection<MtgCardTypesEntity> Types { get; set; }
-        public virtual ICollection<MtgCardSubTypesEntity> Subtypes { get; set; }
+        public virtual IEnumerable<MtgCardLegalitiesEntity> Legalities { get; set; }
+        public virtual IEnumerable<MtgCardColorsEntity> Colors { get; set; }
+        public virtual IEnumerable<MtgCardSetsEntity> Printings { get; set; }
+        public virtual IEnumerable<MtgCardTypesEntity> Types { get; set; }
+        public virtual IEnumerable<MtgCardSubTypesEntity> Subtypes { get; set; }
+        public virtual IEnumerable<MtgCardSupertypesEntity> Supertypes { get; set; }
     }
 }

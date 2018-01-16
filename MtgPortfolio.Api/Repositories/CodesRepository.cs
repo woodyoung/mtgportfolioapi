@@ -1,4 +1,5 @@
-﻿using MtgPortfolio.API.Entities;
+﻿using MtgPortfolio.API.DbContexts;
+using MtgPortfolio.API.Entities;
 using MtgPortfolio.API.Entities.Codes;
 using System;
 using System.Collections.Generic;
@@ -113,6 +114,13 @@ namespace MtgPortfolio.API.Repositories
 
             return rarities;
         }
+        public SetEntity InsertSetEntity(SetEntity set)
+        {
+            _context.Sets.Add(_context.SetAudit<SetEntity>(set));
+            _context.SaveChanges();
+
+            return set;
+        }
 
         public IEnumerable<SetEntity> InsertSetEntities(IEnumerable<SetEntity> sets)
         {
@@ -145,5 +153,6 @@ namespace MtgPortfolio.API.Repositories
 
             return subtypes;
         }
+
     }
 }

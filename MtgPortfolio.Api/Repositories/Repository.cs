@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MtgPortfolio.API.DbContexts;
 using MtgPortfolio.API.Entities;
 
 namespace MtgPortfolio.API.Repositories
@@ -28,6 +29,27 @@ namespace MtgPortfolio.API.Repositories
         public IEnumerable<MtgCardEntity> GetMtgCards()
         {
             return _context.MtgCards;
+        }
+
+        public IEnumerable<MtgCardEntity> InsertMtgCards(IEnumerable<MtgCardEntity> mtgCards)
+        {
+            if (mtgCards == null || !mtgCards.Any()) return null;
+
+            var entities = _context.SetAudit<MtgCardEntity>(mtgCards);
+
+            foreach (var card in entities)
+            {
+                _context.SetAudit<MtgCardLegalitiesEntity>(card.Legalities);
+                _context.SetAudit<MtgCardColorsEntity>(card.Colors);
+                _context.SetAudit<MtgCardTypesEntity>(card.Types);
+                _context.SetAudit<MtgCardSubTypesEntity>(card.Subtypes);
+                _context.SetAudit<MtgCardSupertypesEntity>(card.Supertypes);
+            }
+
+            _context.MtgCards.AddRange(entities);
+            _context.SaveChanges();
+
+            return mtgCards;
         }
     }
 }

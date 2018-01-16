@@ -14,6 +14,8 @@ using MtgPortfolio.API.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using MtgPortfolio.Api.Automapper;
+using MtgPortfolio.API.DbContexts;
+using MtgPortfolio.Api.DbContexts;
 
 namespace MtgPortfolio.Api
 {
@@ -36,10 +38,11 @@ namespace MtgPortfolio.Api
             services.AddTransient<IRepository, Repository>();
             services.AddTransient<ICodesRepository, CodesRepository>();
             services.AddTransient<IMtgJsonImportService, MtgJsonImportService>();
-            services.AddTransient<ICodesService, CodesService>();
+            services.AddSingleton<ICodesCacheService, CodesCacheService>();
 
             var connectionString = @"Server=(localdb)\ProjectsV13;Database=MtgPortfolio;Trusted_Connection=True;";
             services.AddDbContext<MtgPortfolioDbContext>(o => o.UseSqlServer(connectionString));
+            services.AddDbContext<CodesDbContext>(o => o.UseSqlServer(connectionString), ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

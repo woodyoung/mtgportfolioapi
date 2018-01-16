@@ -22,12 +22,12 @@ namespace MtgPortfolio.API.Controllers
             _service = service;
         }
 
-        [HttpPost("api/mtgJsonAllSetsX")]
-        public IActionResult InsertMtgCards()
+        [HttpPost("api/mtgJsonAllSetsX/{setCode}")]
+        public IActionResult InsertMtgCards(string setCode)
         {
             try
             {
-                var isSuccessful = _service.ImportMtgJsonToDatabase();
+                var isSuccessful = _service.ImportMtgJsonToDatabase(setCode);
 
                 return Ok(isSuccessful);
             }

@@ -42,6 +42,7 @@ namespace MtgPortfolio.API.Repositories
         IEnumerable<RarityEntity> InsertRarityEntities(IEnumerable<RarityEntity> rarities);
 
         IEnumerable<SetEntity> InsertSetEntities(IEnumerable<SetEntity> sets);
+        SetEntity InsertSetEntity(SetEntity set);
 
         IEnumerable<TypeEntity> InsertTypeEntities(IEnumerable<TypeEntity> types);
 

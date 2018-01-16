@@ -11,5 +11,7 @@ namespace MtgPortfolio.API.Repositories
         IEnumerable<MtgCardEntity> GetMtgCards();
         MtgCardEntity GetMtgCardByName(string name);
         MtgCardEntity GetMtgCard(int id);
+
+        IEnumerable<MtgCardEntity> InsertMtgCards(IEnumerable<MtgCardEntity> mtgCards);
     }
 }

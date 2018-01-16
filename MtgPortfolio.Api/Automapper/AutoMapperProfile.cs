@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MtgPortfolio.Api.Automapper.CustomResolvers;
 using MtgPortfolio.API.Automapper;
 using MtgPortfolio.API.Entities;
 using MtgPortfolio.API.Entities.Codes;

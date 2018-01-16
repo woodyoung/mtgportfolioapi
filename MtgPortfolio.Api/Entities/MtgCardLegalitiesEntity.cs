@@ -13,7 +13,7 @@ namespace MtgPortfolio.API.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int LegalitiesId { get; set; }
+        public int MtgCardLegalitiesId { get; set; }
         public int MtgCardId { get; set; }
         public int FormatId { get; set; }
         public int LegalityId { get; set; }
